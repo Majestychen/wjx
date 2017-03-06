@@ -3,6 +3,7 @@
 
 import xlrd
 from tkinter import *
+from tkinter import filedialog
 
 def convert(inputfile,outputfile):
     wb = xlrd.open_workbook(inputfile)
@@ -20,8 +21,9 @@ def convert(inputfile,outputfile):
             topic = topic.replace("(", "（")
             topic = topic.replace(")","）")
             topic = topic.replace("（）", "（ ）")
+            topic = topic.replace("\u3000",'')  #解决编码问题
             topic = topic.split("（ ",1)
-            #print(len(topic),topic)
+            print(len(topic),topic)
             #Lbox.insert(END, len(topic))
             #Lbox.insert(END,topic)
             topic = topic[0] + '（ ' + answer + topic[1]
@@ -29,6 +31,7 @@ def convert(inputfile,outputfile):
             return topic
         except:
             Lbox.insert(END,"拆解第%s题失败，请检查题库文件"%i)
+            Lbox.see(END)
             return None
 
 
@@ -99,15 +102,23 @@ def testfuc():
     b = "output.txt"
     convert(a,b)
     #print("done!")
+    Lbox.see(END)
+
+def getfilepath():
+    filepath = filedialog.askopenfilename()
+    E1.delete(0,END)
+    E1.insert(END,filepath)
+    print(filepath)
 
 #GUI
 root = Tk()
 root.title('题库转换器')
-root.geometry("380x260+500+500")
+#root.geometry("380x260+500+500")
 Label(root,text = "输入题库文件路径：").pack()
 E1 = Entry(root,width=40,bd=3)
 E1.pack()
-Button(root,text = "转换",command = testfuc).pack()
+Button(root,text = "选择文件",command = getfilepath).pack() #加入文件选择窗
+Button(root,text = "转换",fg = 'green',bg = 'blue',width=6,command = testfuc).pack()
 Lbox = Listbox(root,width=40)
 Lbox.pack()
 Label(root,text="新媒体工作室",anchor=CENTER).pack()
