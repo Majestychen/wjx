@@ -118,7 +118,7 @@ Label(root,text = "输入题库文件路径：").pack()
 E1 = Entry(root,width=40,bd=3)
 E1.pack()
 Button(root,text = "选择文件",command = getfilepath).pack() #加入文件选择窗
-Button(root,text = "转换",fg = 'green',bg = 'blue',width=6,command = testfuc).pack()
+Button(root,text = "转换",fg = 'black',bg = 'green',width=7,command = testfuc).pack()
 Lbox = Listbox(root,width=40)
 Lbox.pack()
 Label(root,text="新媒体工作室",anchor=CENTER).pack()
